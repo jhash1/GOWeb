@@ -25,7 +25,7 @@ func faqHandler(w http.ResponseWriter, r *http.Request) {
 	</li>
 	<li>
 	  <b>How do I contact support?</b>
-	  Email us - <a href="mailto:jhashem@hashem.com">jhashem@hashem.com</a>
+	  Email us - <a href="mailto:jhashem@hashem">jhashem@hashem.com</a>
 	</li>
   </ul>
   `)
