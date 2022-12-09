@@ -12,47 +12,50 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	tpl, err := template.ParseFiles("templates/home.gohtml")
 	if err != nil {
 		log.Printf("parsing template: %v", err)
-		http.Error(w, "There was an error parsing the template.",
-			http.StatusInternalServerError)
-		return
+		http.Error(w, "There was an error parsing the template.", http.StatusInternalServerError)
+		return // TODO: Remove the panic
 	}
 	err = tpl.Execute(w, nil)
 	if err != nil {
 		log.Printf("executing template: %v", err)
-		http.Error(w, "There was an error executing the template.",
-			http.StatusInternalServerError)
+		http.Error(w, "There was an error executing the template.", http.StatusInternalServerError)
 		return
 	}
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, `<h1>FAQ Page</h1>
-  <ul>
-	<li>
-	  <b>Is there a free version?</b>
-	  Yes! We offer a free trial for 30 days on any paid plans.
-	</li>
-	<li>
-	  <b>What are your support hours?</b>
-	  We have support staff answering emails 24/7, though response
-	  times may be a bit slower on weekends.
-	</li>
-	<li>
-	  <b>How do I contact support?</b>
-	  Email us - <a href="mailto:jhashem@hashem">jhashem@hashem.com</a>
-	</li>
-  </ul>
-  `)
+	tpl, err := template.ParseFiles("templates/faq.gohtml")
+	if err != nil {
+		log.Printf("parsing template: %v", err)
+		http.Error(w, "There was an error parsing the template.", http.StatusInternalServerError)
+		return // TODO: Remove the panic
+	}
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		log.Printf("executing template: %v", err)
+		http.Error(w, "There was an error executing the template.", http.StatusInternalServerError)
+		return
+	}
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	fmt.Fprint(w, "<h1>Contact Page</h1><p>To get in touch, email me at <a href=\"mailto:jh@gmail.com\">jh@gmail.com</a>.")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tpl, err := template.ParseFiles("templates/contact.gohtml")
+	if err != nil {
+		log.Printf("parsing template: %v", err)
+		http.Error(w, "There was an error parsing the template.", http.StatusInternalServerError)
+		return
+	}
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		log.Printf("executing template: %v", err)
+		http.Error(w, "There was an error executing the template.", http.StatusInternalServerError)
+		return
+	}
 }
 
 func MyRequestHandler(w http.ResponseWriter, r *http.Request) {
@@ -90,5 +93,9 @@ func main() {
 	})
 
 	fmt.Println("Starting the server on :3000...")
-	http.ListenAndServe(":3000", r)
+	// http.ListenAndServe(":3000", r)
+	err := http.ListenAndServe(":3000", r)
+	if err != nil {
+		panic(err)
+	}
 }
