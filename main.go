@@ -12,6 +12,7 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	tpl, err := template.ParseFiles("templates/home.gohtml")
 	if err != nil {
@@ -62,13 +63,9 @@ func MyRequestHandler(w http.ResponseWriter, r *http.Request) {
 	// fetch the url parameter `"userID"` from the request of a matching
 	// routing pattern. An example routing pattern could be: /users/{userID}
 	userID := chi.URLParam(r, "userID")
-
 	// respond to the client
 	w.Write([]byte(fmt.Sprintf("Here is the userID: %v", userID)))
 }
-
-// func pathHandler(w http.ResponseWriter, r *http.Request) {
-// }
 
 func main() {
 
